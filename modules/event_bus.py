@@ -12,6 +12,7 @@ class EventBus:
     def emit(self, event: pygame.event.Event, payload: dict[str, Any]) -> None:     # pyright: ignore[reportExplicitAny]
         for callback in self._listeners.get(event.type, []):
             callback(payload)                                                       # pyright: ignore[reportArgumentType]
+        _ = pygame.event.post(event)
 
 
 

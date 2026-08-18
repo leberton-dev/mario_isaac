@@ -4,6 +4,7 @@ from .asset_manager import AssetManager
 from .event_bus import EventBus
 from .config import Config
 
+PLAY_PRESSED_EVENT_KEY = pygame.event.custom_type()
 
 class Scene(ABC):
     def __init__(self, surface: pygame.Surface, asset_manager: AssetManager, bus: EventBus, config: Config) -> None:
@@ -29,7 +30,9 @@ class MenuScene(Scene):
         super().__init__(surface, asset_manager, bus, config)
 
     def handle_event(self, event: pygame.event.Event) -> None:
-        pass
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_0:
+                self._event_bus.emit(pygame.event.Event(PLAY_PRESSED_EVENT_KEY), {"scene": "hello"})
 
     def update(self) -> None:
         pass
