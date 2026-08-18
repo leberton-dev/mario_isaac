@@ -2,12 +2,7 @@ import pygame
 from .asset_manager import AssetManager
 from .config import Config
 from .event_bus import EventBus
-
-moved_data = {"moved": False}
-
-def _player_moved(data: dict[str, bool]) -> None:
-    moved_data["moved"] = data["moved"]
-    print(f"'moved_data' is set so {moved_data["moved"]}")
+from .scene_manager import PlayScene, SceneManager
 
 def main() -> None:
     _ = pygame.init()
@@ -17,40 +12,26 @@ def main() -> None:
 
     screen: pygame.Surface = pygame.display.set_mode(config.screen.size)
     running: bool = True
-    manager = AssetManager()
-    player_surf = manager.player_frames["idle"]["frame_1"]
-    player_rect = player_surf.get_rect()
     clock = pygame.time.Clock()
-
-    bus = EventBus()
-    moved_right_event = pygame.event.custom_type()
-    bus.subscribe(moved_right_event, _player_moved)                                 # pyright: ignore[reportArgumentType]
+    scene_manager = SceneManager()
+    asset_manager = AssetManager()
+    event_bus = EventBus()
+    play_scene: PlayScene = PlayScene(screen, asset_manager, event_bus, config)
+    scene_manager.add(play_scene)
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            scene_manager.scene.handle_event(event)
+        
+        scene_manager.scene.update()
 
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_w]:
-            bus.emit(pygame.event.Event(moved_right_event), {"moved": True})
-            player_rect = player_rect.move(0, -10)
-        elif keys[pygame.K_s]:
-            bus.emit(pygame.event.Event(moved_right_event), {"moved": True})
-            player_rect = player_rect.move(0, 10)
-        elif keys[pygame.K_a]:
-            bus.emit(pygame.event.Event(moved_right_event), {"moved": True})
-            player_rect = player_rect.move(-10, 0)
-        elif keys[pygame.K_d]:
-            bus.emit(pygame.event.Event(moved_right_event), {"moved": True})
-            player_rect = player_rect.move(10, 0)
-        else:
-            bus.emit(pygame.event.Event(moved_right_event), {"moved": False})
-
-        _ = screen.fill((0, 0, 0))
-        _ = screen.blit(player_surf, player_rect)
+        scene_manager.scene.draw()
         pygame.display.flip()
+
         _ = clock.tick(60)
+
     pygame.quit()
 
 if __name__ == "__main__":
