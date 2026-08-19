@@ -2,8 +2,9 @@ import pygame
 from .asset_manager import AssetManager
 from .config import Config
 from .event_bus import EventBus
-from .scene_manager import PlayScene, MenuScene, SceneManager, PLAY_PRESSED_EVENT_KEY
+from .scene import PlayScene, MenuScene, SceneManager, PLAY_PRESSED_EVENT_KEY
 from typing import Any
+from .ecs import EntityManager
 
 def _say_hello(data: dict[str, Any]) -> None:
     print('Hello')
@@ -21,9 +22,9 @@ def main() -> None:
     asset_manager = AssetManager()
     event_bus = EventBus()
     menu_scene: MenuScene = MenuScene(screen, asset_manager, event_bus, config)
-    play_scene: PlayScene = PlayScene(screen, asset_manager, event_bus, config)
+    play_scene: PlayScene = PlayScene(screen, asset_manager, event_bus, config, EntityManager())
     scene_manager.add(menu_scene)
-    event_bus.subscribe(PLAY_PRESSED_EVENT_KEY, _say_hello)
+    event_bus.subscribe(PLAY_PRESSED_EVENT_KEY, _say_hello)                         # pyright: ignore[reportArgumentType]
 
     while running:
         for event in pygame.event.get():
