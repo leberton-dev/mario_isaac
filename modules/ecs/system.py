@@ -63,5 +63,6 @@ class RenderSystem(System):
             assert isinstance(tra, TransformComponent)
             assert isinstance(spr, SpriteComponent)
             _ = surface.blit(spr.sprites[spr.current_sprite][f"frame_{spr.current_frame}"], tra.pos)
+            spr.set_next_frame()
             
 

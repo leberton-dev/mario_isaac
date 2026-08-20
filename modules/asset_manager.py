@@ -19,7 +19,7 @@ class AssetManager:
         idle: list[pygame.Surface] = self._strip_from_sheet(sheet, [0, 0], [16, 16], 3)
 
         self.player_frames["idle"] = {}
-        self.player_frames["idle"]["frame_0"] = idle[0]
-        self.player_frames["idle"]["frame_1"] = idle[1]
-        self.player_frames["idle"]["frame_2"] = idle[2]
+        self.player_frames["idle"]["frame_0"] = pygame.transform.scale(idle[0], (32, 32))
+        self.player_frames["idle"]["frame_1"] = pygame.transform.scale(idle[1], (32, 32))
+        self.player_frames["idle"]["frame_2"] = pygame.transform.scale(idle[2], (32, 32))
 
