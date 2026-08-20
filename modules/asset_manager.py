@@ -3,7 +3,9 @@ import pygame
 class AssetManager:
     def __init__(self) -> None:
         self.player_frames: dict[str, dict[str, pygame.Surface]] = {}
+        self.room_frames: dict[str, dict[str, pygame.Surface]] = {}
         self._init_player()
+        self._init_room_frames()
 
     def _strip_from_sheet(self, sheet: pygame.Surface, origin: list[int], frame_size: list[int], columns: int, rows: int=1) -> list[pygame.Surface]:
         frames: list[pygame.Surface] = []
@@ -23,3 +25,8 @@ class AssetManager:
         self.player_frames["idle"]["frame_1"] = pygame.transform.scale(idle[1], (32, 32))
         self.player_frames["idle"]["frame_2"] = pygame.transform.scale(idle[2], (32, 32))
 
+    def _init_room_frames(self) -> None:
+        stone = pygame.image.load("assets/room/floor_stone.png").convert_alpha()
+
+        self.room_frames["floor"] = {}
+        self.room_frames["floor"]["stone_0"] = pygame.transform.scale(stone, (32, 32))

@@ -12,14 +12,16 @@ PLAY_PRESSED_EVENT_KEY = pygame.event.custom_type()
 class MenuScene(Scene):
     def __init__(self, surface: pygame.Surface, asset_manager: AssetManager, bus: EventBus, config: Config) -> None:
         super().__init__(surface, asset_manager, bus, config)
-        self._play_button: Button = Button(self._surface, 500, 100)
-        self._play_button.setCords(500, self._surface.get_size()[1] // 5)
+        screen_size = self._surface.get_size()
+        width = screen_size[0]//2
+        height = screen_size[1]//8
+        self._play_button: Button = Button(self._surface, width, height)
+        self._play_button.setCords((screen_size[0] - width)//2, screen_size[1] // 6)
 
     @override
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN:
-            mouse = pygame.mouse.get_pos()
-            if self._play_button.pressed(mouse):
+            if self._play_button.pressed(event.pos):
                 self._event_bus.emit(pygame.event.Event(PLAY_PRESSED_EVENT_KEY), {"scene": "hello"})
 
     @override

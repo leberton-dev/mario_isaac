@@ -7,6 +7,7 @@ from ..event_bus import EventBus
 from ..config import Config
 
 from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem
+from ..room import Floor
 
 
 class PlayScene(Scene):
@@ -19,7 +20,8 @@ class PlayScene(Scene):
         self._entity_manager.add_component(self._player, VelocityComponent(0, 0, 5))
         self._entity_manager.add_component(self._player, SpriteComponent(self._asset_manager.player_frames))
         self._systems: list[System] = [MovementSystem(self._entity_manager), InputSystem(self._entity_manager)]
-        self._drawSystem: RenderSystem = RenderSystem(self._entity_manager)
+        self._render_system: RenderSystem = RenderSystem(self._entity_manager)
+        self._floor: Floor = Floor(self._asset_manager, self._entity_manager)
 
     @override
     def handle_event(self, event: pygame.event.Event) -> None:
@@ -33,6 +35,6 @@ class PlayScene(Scene):
     @override
     def draw(self) -> None:
         _ = self._surface.fill((255, 0, 0))
-        self._drawSystem.draw(self._surface)
-
+        self._floor.draw(self._surface)
+        self._render_system.draw(self._surface)
 
