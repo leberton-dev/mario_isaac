@@ -10,7 +10,9 @@ class Room:
         self._asset_manager: AssetManager = asset_manager
         self._size: tuple[int, int] = 20, 11
         self._textures: list[list[pygame.Surface]] = []
+        self._doors: list[tuple[int, int]] = []
         self._design_room()
+        self._create_doors()
 
     def _design_room(self) -> None:
         stone = self._asset_manager.room_frames["floor"]["stone_0"]
@@ -21,9 +23,23 @@ class Room:
                 row.append(random.choice([stone, stonebrick]))
             self._textures.append(row)
 
+    def is_on_door(self, pos: tuple[int, int]) -> bool:
+        # print(f"[DEBUG] Position = {pos} in {self._doors}")
+        return pos in self._doors
+
+    def _create_doors(self) -> None:
+        y = random.randint(4, 8)
+        self._doors.append((0, y))
+        self._doors.append((19, y))
+
+        x = random.randint(10, 15)
+        self._doors.append((x, 0))
+        self._doors.append((x, 10))
+
     def draw(self, surface: pygame.Surface) -> None:
         for x in range(self._size[0]):
             for y in range(self._size[1]):
                 _ = surface.blit(self._textures[x][y], (x*32, y*32))
-
+        for door in self._doors:
+            _ = surface.blit(self._asset_manager.room_frames["door"]["door"], (door[0]*32, door[1]*32))
 

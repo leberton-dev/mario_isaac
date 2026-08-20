@@ -21,7 +21,7 @@ class PlayScene(Scene):
         self._entity_manager.add_component(self._player, SpriteComponent(self._asset_manager.player_frames))
         self._systems: list[System] = [MovementSystem(self._entity_manager), InputSystem(self._entity_manager)]
         self._render_system: RenderSystem = RenderSystem(self._entity_manager)
-        self._floor: Floor = Floor(self._asset_manager, self._entity_manager)
+        self._floor: Floor = Floor(self._asset_manager, self._entity_manager, self._player)
 
     @override
     def handle_event(self, event: pygame.event.Event) -> None:
@@ -31,6 +31,7 @@ class PlayScene(Scene):
     def update(self) -> None:
         for system in self._systems:
             system.update()
+        self._floor.update()
 
     @override
     def draw(self) -> None:
