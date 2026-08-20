@@ -27,6 +27,8 @@ class AssetManager:
 
     def _init_room_frames(self) -> None:
         stone = pygame.image.load("assets/room/floor_stone.png").convert_alpha()
+        stonebrick = pygame.image.load("assets/room/stone_brick.png").convert_alpha()
 
         self.room_frames["floor"] = {}
         self.room_frames["floor"]["stone_0"] = pygame.transform.scale(stone, (32, 32))
+        self.room_frames["floor"]["stone_1"] = pygame.transform.scale(stonebrick, (32, 32))
