@@ -11,8 +11,13 @@ class Room:
         self._size: tuple[int, int] = 20, 11
         self._textures: list[list[pygame.Surface]] = []
         self._doors: list[tuple[int, int]] = []
+        self._enemies: list[int] = []
         self._design_room()
         self._create_doors()
+
+    @property
+    def doors_open(self) -> bool:
+        return len(self._enemies) == 0
 
     def _design_room(self) -> None:
         stone = self._asset_manager.room_frames["floor"]["stone_0"]
@@ -41,5 +46,8 @@ class Room:
             for y in range(self._size[1]):
                 _ = surface.blit(self._textures[x][y], (x*32, y*32))
         for door in self._doors:
-            _ = surface.blit(self._asset_manager.room_frames["door"]["door"], (door[0]*32, door[1]*32))
+            if self.doors_open:
+                _ = surface.blit(self._asset_manager.room_frames["door"]["open"], (door[0]*32, door[1]*32))
+            else:
+                _ = surface.blit(self._asset_manager.room_frames["door"]["closed"], (door[0]*32, door[1]*32))
 

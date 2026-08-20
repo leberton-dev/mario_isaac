@@ -21,7 +21,7 @@ class RoomGrid:
             self._rooms.append(Room(self._asset_manager, self._entity_manager))
 
     def update(self) -> None:
-        if self._is_player_on_door():
+        if self.room.doors_open and self._is_player_on_door():
             _ = self._rooms.pop()
 
     def draw(self, surface: pygame.Surface) -> None:
