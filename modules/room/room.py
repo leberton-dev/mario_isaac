@@ -33,13 +33,11 @@ class Room:
         return pos in self._doors
 
     def _create_doors(self) -> None:
-        y = random.randint(4, 8)
-        self._doors.append((0, y))
-        self._doors.append((19, y))
+        self._doors.append((0, 5))
+        self._doors.append((19, 5))
 
-        x = random.randint(10, 15)
-        self._doors.append((x, 0))
-        self._doors.append((x, 10))
+        self._doors.append((10, 0))
+        self._doors.append((10, 10))
 
     def draw(self, surface: pygame.Surface) -> None:
         for x in range(self._size[0]):

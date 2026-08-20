@@ -23,9 +23,23 @@ class RoomGrid:
     def update(self) -> None:
         if self.room.doors_open and self._is_player_on_door():
             _ = self._rooms.pop()
+            self._place_player_on_door()
 
     def draw(self, surface: pygame.Surface) -> None:
         self.room.draw(surface)
+
+    def _place_player_on_door(self) -> None:
+        tra = self._entity_manager.get_component_from_entity(self._player, TransformComponent)
+        assert isinstance(tra, TransformComponent)
+        pos = tra.x // 32, tra.y // 32
+        if pos[0] == 0:
+            tra.x = 18 * 32
+        elif pos[0] == 19:
+            tra.x = 32
+        elif pos[1] == 0:
+            tra.y = 9 * 32
+        elif pos[1] == 10:
+            tra.y = 32
 
     def _is_player_on_door(self) -> bool:
         tra = self._entity_manager.get_component_from_entity(self._player, TransformComponent)
