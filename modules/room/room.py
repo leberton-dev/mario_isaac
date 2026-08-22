@@ -5,12 +5,13 @@ from ..ecs import EntityManager
 from ..asset_manager import AssetManager
 
 class Room:
-    def __init__(self, asset_manager: AssetManager, entity_manager: EntityManager) -> None:
+    def __init__(self, asset_manager: AssetManager, entity_manager: EntityManager, doors_dir: set[str]) -> None:
         self._entity_manager: EntityManager = entity_manager
         self._asset_manager: AssetManager = asset_manager
         self._size: tuple[int, int] = 20, 11
         self._textures: list[list[pygame.Surface]] = []
         self._doors: list[tuple[int, int]] = []
+        self._doors_dir: set[str] = doors_dir
         self._enemies: list[int] = []
         self._design_room()
         self._create_doors()
@@ -33,11 +34,14 @@ class Room:
         return pos in self._doors
 
     def _create_doors(self) -> None:
-        self._doors.append((0, 5))
-        self._doors.append((19, 5))
-
-        self._doors.append((10, 0))
-        self._doors.append((10, 10))
+        if "left" in self._doors_dir:
+            self._doors.append((0, 5))
+        if "right" in self._doors_dir:
+            self._doors.append((19, 5))
+        if "top" in self._doors_dir:
+            self._doors.append((10, 0))
+        if "bottom" in self._doors_dir:
+            self._doors.append((10, 10))
 
     def draw(self, surface: pygame.Surface) -> None:
         for x in range(self._size[0]):
