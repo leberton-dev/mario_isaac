@@ -30,10 +30,15 @@ class AssetManager:
         stonebrick = pygame.image.load("assets/room/stone_brick.png").convert_alpha()
         door_open = pygame.image.load("assets/room/door_open.png").convert_alpha()
         door_closed = pygame.image.load("assets/room/door_closed.png").convert_alpha()
+        wall = pygame.image.load("assets/room/wall.png").convert_alpha()
 
         self.room_frames["floor"] = {}
         self.room_frames["floor"]["stone_0"] = pygame.transform.scale(stone, (32, 32))
         self.room_frames["floor"]["stone_1"] = pygame.transform.scale(stonebrick, (32, 32))
+
         self.room_frames["door"] = {}
         self.room_frames["door"]["open"] = pygame.transform.scale(door_open, (32, 32))
         self.room_frames["door"]["closed"] = pygame.transform.scale(door_closed, (32, 32))
+
+        self.room_frames["wall"] = {}
+        self.room_frames["wall"]["first"] = pygame.transform.scale(wall, (32, 32))

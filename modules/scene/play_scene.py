@@ -6,8 +6,8 @@ from ..asset_manager import AssetManager
 from ..event_bus import EventBus
 from ..config import Config
 
-from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem
-from ..room import Floor
+from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem, WallCollisionSystem
+from ..room import Floor, Position
 
 
 class PlayScene(Scene):
@@ -16,12 +16,16 @@ class PlayScene(Scene):
         self._asset_manager: AssetManager = asset_manager
         self._entity_manager: EntityManager = EntityManager()
         self._player: int = self._entity_manager.create_entity()
-        self._entity_manager.add_component(self._player, TransformComponent(16, 16, 150, 150))
+        self._entity_manager.add_component(self._player, TransformComponent(32, 32, 150, 150))
         self._entity_manager.add_component(self._player, VelocityComponent(0, 0, 5))
         self._entity_manager.add_component(self._player, SpriteComponent(self._asset_manager.player_frames))
-        self._systems: list[System] = [MovementSystem(self._entity_manager), InputSystem(self._entity_manager)]
-        self._render_system: RenderSystem = RenderSystem(self._entity_manager)
         self._floor: Floor = Floor(self._asset_manager, self._entity_manager, self._player)
+        self._systems: list[System] = [
+            InputSystem(self._entity_manager),
+            MovementSystem(self._entity_manager),
+            WallCollisionSystem(self._entity_manager, self._floor.room_grid),
+        ]
+        self._render_system: RenderSystem = RenderSystem(self._entity_manager)
 
     @override
     def handle_event(self, event: pygame.event.Event) -> None:

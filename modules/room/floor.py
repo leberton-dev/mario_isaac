@@ -11,6 +11,10 @@ class Floor:
         self._entity_manager: EntityManager = entity_manager
         self._room_grid: RoomGrid = RoomGrid(asset_manager, entity_manager, player_id)
 
+    @property
+    def room_grid(self) -> RoomGrid:
+        return self._room_grid
+
     def draw(self, surface: pygame.Surface) -> None:
         self._room_grid.draw(surface)
 

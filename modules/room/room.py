@@ -1,31 +1,62 @@
 import pygame
 import random
+from typing import NamedTuple
 
 from ..ecs import EntityManager
 from ..asset_manager import AssetManager
+
+class Size(NamedTuple):
+    width: int
+    height: int
+
+class Position(NamedTuple):
+    x: int
+    y: int
+
+    @property
+    def tup(self) -> tuple[int, int]:
+        return self.x, self.y
+
+    @property
+    def tiled_tup(self) -> tuple[int, int]:
+        return self.tiled_x, self.tiled_y
+
+    @property
+    def tiled_x(self) -> int:
+        return self.x*32
+
+    @property
+    def tiled_y(self) -> int:
+        return self.y*32
 
 class Room:
     def __init__(self, asset_manager: AssetManager, entity_manager: EntityManager, doors_dir: set[str]) -> None:
         self._entity_manager: EntityManager = entity_manager
         self._asset_manager: AssetManager = asset_manager
-        self._size: tuple[int, int] = 20, 11
+        self._size: Size = Size(20, 11)
         self._textures: list[list[pygame.Surface]] = []
-        self._doors: list[tuple[int, int]] = []
+        self._doors: list[Position] = []
         self._doors_dir: set[str] = doors_dir
         self._enemies: list[int] = []
+        self._walls: list[Position] = []
         self._design_room()
         self._create_doors()
+        self._create_walls()
 
     @property
     def doors_open(self) -> bool:
         return len(self._enemies) == 0
 
+    @property
+    def walls(self) -> list[Position]:
+        return self._walls
+
     def _design_room(self) -> None:
         stone = self._asset_manager.room_frames["floor"]["stone_0"]
         stonebrick = self._asset_manager.room_frames["floor"]["stone_1"]
-        for _ in range(self._size[0]):
+        for _ in range(self._size.width):
             row: list[pygame.Surface] = []
-            for _ in range(self._size[1]):
+            for _ in range(self._size.height):
                 row.append(random.choice([stone, stonebrick]))
             self._textures.append(row)
 
@@ -35,21 +66,30 @@ class Room:
 
     def _create_doors(self) -> None:
         if "left" in self._doors_dir:
-            self._doors.append((0, 5))
+            self._doors.append(Position(0, 5))
         if "right" in self._doors_dir:
-            self._doors.append((19, 5))
+            self._doors.append(Position(19, 5))
         if "top" in self._doors_dir:
-            self._doors.append((10, 0))
+            self._doors.append(Position(10, 0))
         if "bottom" in self._doors_dir:
-            self._doors.append((10, 10))
+            self._doors.append(Position(10, 10))
+
+    def _create_walls(self) -> None:
+        for x in range(self._size.width):
+            for y in range(self._size.height):
+                if (x == 0 or x == self._size.width - 1) and (x, y) not in self._doors:
+                    self._walls.append(Position(x, y))
+                elif (y == 0 or y == self._size.height - 1) and (x, y) not in self._doors:
+                    self._walls.append(Position(x, y))
 
     def draw(self, surface: pygame.Surface) -> None:
-        for x in range(self._size[0]):
-            for y in range(self._size[1]):
+        for x in range(self._size.width):
+            for y in range(self._size.height):
                 _ = surface.blit(self._textures[x][y], (x*32, y*32))
+        for wall in self._walls:
+            _ = surface.blit(self._asset_manager.room_frames["wall"]["first"], wall.tiled_tup)
         for door in self._doors:
             if self.doors_open:
-                _ = surface.blit(self._asset_manager.room_frames["door"]["open"], (door[0]*32, door[1]*32))
+                _ = surface.blit(self._asset_manager.room_frames["door"]["open"], door.tiled_tup)
             else:
-                _ = surface.blit(self._asset_manager.room_frames["door"]["closed"], (door[0]*32, door[1]*32))
-
+                _ = surface.blit(self._asset_manager.room_frames["door"]["closed"], door.tiled_tup)
