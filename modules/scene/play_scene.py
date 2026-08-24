@@ -4,7 +4,7 @@ from typing import override
 from .scene import Scene
 from ..core import AssetManager, Config, EventBus
 
-from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem, WallCollisionSystem, PlayerControlledComponent, AIMovementSystem, CollisionComponent
+from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem, WallCollisionSystem, PlayerControlledComponent, AIMovementSystem, CollisionComponent, EntityCollisionSystem
 from ..room import Floor, Position
 
 
@@ -22,9 +22,10 @@ class PlayScene(Scene):
         self._floor: Floor = Floor(self._asset_manager, self._entity_manager, self._player)
         self._systems: list[System] = [
             InputSystem(self._entity_manager),
+            AIMovementSystem(self._entity_manager, self._player, self._floor.room_grid),
             MovementSystem(self._entity_manager),
-            AIMovementSystem(self._entity_manager, self._player),
             WallCollisionSystem(self._entity_manager, self._floor.room_grid),
+            # EntityCollisionSystem(self._entity_manager, self._floor.room_grid)
         ]
         self._render_system: RenderSystem = RenderSystem(self._entity_manager)
 
@@ -42,5 +43,5 @@ class PlayScene(Scene):
     def draw(self) -> None:
         _ = self._surface.fill((255, 0, 0))
         self._floor.draw(self._surface)
-        self._render_system.draw(self._surface, [self._player] + self._floor.room_grid.current_room.enemies_ids)
+        self._render_system.draw(self._surface, [self._player] + self._floor.room_grid.current_room.enemy_ids)
 

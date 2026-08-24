@@ -4,3 +4,4 @@ from .ai_movement import AIMovementSystem
 from .movement import MovementSystem
 from .render import RenderSystem
 from .wall_collision import WallCollisionSystem
+from .entity_collision import EntityCollisionSystem

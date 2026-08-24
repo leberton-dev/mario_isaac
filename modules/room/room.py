@@ -55,7 +55,7 @@ class Room:
         return self._walls + self._doors
 
     @property
-    def enemies_ids(self) -> list[int]:
+    def enemy_ids(self) -> list[int]:
         return self._enemy_ids
 
     def create_enemies(self) -> None:
