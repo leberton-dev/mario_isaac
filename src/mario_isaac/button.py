@@ -1,6 +1,7 @@
 import pygame
 
-class Button():
+
+class Button:
     def __init__(self, surface: pygame.Surface, width: int, height: int) -> None:
         self._surface: pygame.Surface = surface
         self._rect: pygame.rect.Rect = pygame.rect.Rect(0, 0, width, height)

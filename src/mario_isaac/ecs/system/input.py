@@ -1,9 +1,11 @@
-import pygame
 from typing import override
 
-from .base import System
+import pygame
+
+from ..component import PlayerControlledComponent, VelocityComponent
 from ..entity_manager import EntityManager
-from ..component import VelocityComponent, PlayerControlledComponent
+from .base import System
+
 
 class InputSystem(System):
     def __init__(self, entity_manager: EntityManager) -> None:
@@ -17,7 +19,7 @@ class InputSystem(System):
             return
 
         keys = pygame.key.get_pressed()
-        for key in entities.keys():
+        for key in entities:
 
             velocity = self._entity_manager.get_component(key, VelocityComponent)
             assert isinstance(velocity, VelocityComponent)

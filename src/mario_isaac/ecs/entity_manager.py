@@ -1,5 +1,6 @@
 from .component import Component
 
+
 class EntityManager:
     def __init__(self) -> None:
         self._last: int = 0

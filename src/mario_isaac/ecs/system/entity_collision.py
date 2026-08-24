@@ -1,9 +1,11 @@
-import pygame
-from typing import override, TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
-from .base import System
+import pygame
+
+from ..component import CollisionComponent, TransformComponent, VelocityComponent
 from ..entity_manager import EntityManager
-from ..component import TransformComponent, VelocityComponent, CollisionComponent
+from .base import System
+
 if TYPE_CHECKING:
     from ...room import RoomGrid
 
@@ -11,7 +13,7 @@ if TYPE_CHECKING:
 class EntityCollisionSystem(System):
     def __init__(self, entity_manager: EntityManager, room_grid: "RoomGrid") -> None:
         super().__init__(entity_manager)
-        self._room_grid: "RoomGrid" = room_grid
+        self._room_grid: RoomGrid = room_grid
 
     @override
     def update(self) -> None:

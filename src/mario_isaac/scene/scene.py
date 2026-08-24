@@ -1,5 +1,6 @@
-import pygame
 from abc import ABC, abstractmethod
+
+import pygame
 
 from ..core import AssetManager, Config, EventBus
 

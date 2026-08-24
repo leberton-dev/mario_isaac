@@ -1,9 +1,11 @@
-import pygame
-from typing import override, TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
-from .base import System
+import pygame
+
+from ..component import CollisionComponent, TransformComponent, VelocityComponent
 from ..entity_manager import EntityManager
-from ..component import TransformComponent, VelocityComponent, CollisionComponent
+from .base import System
+
 if TYPE_CHECKING:
     from ...room import RoomGrid
 
@@ -11,7 +13,7 @@ if TYPE_CHECKING:
 class WallCollisionSystem(System):
     def __init__(self, entity_manager: EntityManager, room_grid: "RoomGrid") -> None:
         super().__init__(entity_manager)
-        self._room_grid: "RoomGrid" = room_grid
+        self._room_grid: RoomGrid = room_grid
 
     @override
     def update(self) -> None:
@@ -19,7 +21,7 @@ class WallCollisionSystem(System):
         for pos in self._room_grid.current_room.walls:
             wall_rects.append(pygame.Rect(pos.px_x, pos.px_y, 32, 32))
         entities = self._entity_manager.get_entities_with_components([TransformComponent, VelocityComponent, CollisionComponent])
-        for key in entities.keys():
+        for key in entities:
             transform = self._entity_manager.get_component(key, TransformComponent)
             velocity = self._entity_manager.get_component(key, VelocityComponent)
             collision = self._entity_manager.get_component(key, CollisionComponent)

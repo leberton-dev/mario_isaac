@@ -1,5 +1,6 @@
 from .scene import Scene
 
+
 class SceneManager:
     def __init__(self) -> None:
         self._scenes: list[Scene] = []

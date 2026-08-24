@@ -1,8 +1,8 @@
 from typing import override
 
-from .base import System
+from ..component import TransformComponent, VelocityComponent
 from ..entity_manager import EntityManager
-from ..component import VelocityComponent, TransformComponent
+from .base import System
 
 
 class MovementSystem(System):
@@ -14,7 +14,7 @@ class MovementSystem(System):
         entities = self._entity_manager.get_entities_with_components([VelocityComponent, TransformComponent])
         if len(entities) == 0:
             return
-        for key in entities.keys():
+        for key in entities:
             velocity = self._entity_manager.get_component(key, VelocityComponent)
             transform = self._entity_manager.get_component(key, TransformComponent)
             assert isinstance(velocity, VelocityComponent)
