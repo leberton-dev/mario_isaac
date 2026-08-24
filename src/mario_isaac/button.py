@@ -9,19 +9,7 @@ class Button():
         self._rect.topleft = x,y
 
     def pressed(self, mouse: tuple[int, int]):
-        if mouse[0] > self._rect.topleft[0]:
-            if mouse[1] > self._rect.topleft[1]:
-                if mouse[0] < self._rect.bottomright[0]:
-                    if mouse[1] < self._rect.bottomright[1]:
-                        return True
-                    else:
-                        return False
-                else:
-                    return False
-            else:
-                return False
-        else:
-            return False
+        return self._rect.collidepoint(mouse)
 
     def draw(self, color: pygame.Color) -> None:
         _ = pygame.draw.rect(self._surface, color, self._rect)

@@ -85,7 +85,6 @@ class Room:
             self._textures.append(row)
 
     def is_on_door(self, pos: tuple[int, int]) -> bool:
-        # print(f"[DEBUG] Position = {pos} in {self._doors}")
         return pos in self._doors
 
     def _create_doors(self) -> None:
