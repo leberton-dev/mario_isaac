@@ -62,6 +62,7 @@ class RoomGrid:
             offset = self._get_door_direction()
             self._room_pos = (self._room_pos[0] + offset[0], self._room_pos[1] + offset[1])
             self._place_player_on_door()
+            self._rooms[self._room_pos].create_enemies()
 
     def _get_door_direction(self) -> tuple[int, int]:
         transform = self._entity_manager.get_component_from_entity(self._player_id, TransformComponent)

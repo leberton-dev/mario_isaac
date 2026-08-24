@@ -42,4 +42,7 @@ class EntityManager:
                 entities[key] = value
         return entities
 
+    def remove_entity(self, entity_id: int) -> None:
+        _ = self._components.pop(entity_id, None)
+
 

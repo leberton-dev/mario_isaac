@@ -2,7 +2,7 @@ import pygame
 import random
 from typing import NamedTuple
 
-from ..ecs import EntityManager
+from ..ecs import EntityManager, TransformComponent, SpriteComponent, VelocityComponent
 from ..asset_manager import AssetManager
 
 class Size(NamedTuple):
@@ -39,6 +39,7 @@ class Room:
         self._doors_dir: set[str] = doors_dir
         self._enemies: list[int] = []
         self._walls: list[Position] = []
+        self._spawned_enemies: bool = False
         self._design_room()
         self._create_doors()
         self._create_walls()
@@ -49,7 +50,28 @@ class Room:
 
     @property
     def walls(self) -> list[Position]:
-        return self._walls
+        if self.doors_open:
+            return self._walls
+        return self._walls + self._doors
+
+    @property
+    def enemies_ids(self) -> list[int]:
+        return self._enemies
+
+    def create_enemies(self) -> None:
+        if self._spawned_enemies:
+            return
+
+        enemy_count = random.randint(3, 6)
+        for _ in range(enemy_count):
+            id = self._entity_manager.create_entity()
+            pos_x = random.randint(1, 18)
+            pos_y = random.randint(1, 9)
+            self._entity_manager.add_component(id, TransformComponent(32, 32, pos_x*32, pos_y*32))
+            self._entity_manager.add_component(id, SpriteComponent(self._asset_manager.enemy_frames))
+            self._entity_manager.add_component(id, VelocityComponent(0, 0, 2))
+            self._enemies.append(id)
+        self._spawned_enemies = True
 
     def _design_room(self) -> None:
         stone = self._asset_manager.room_frames["floor"]["stone_0"]

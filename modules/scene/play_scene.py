@@ -6,7 +6,7 @@ from ..asset_manager import AssetManager
 from ..event_bus import EventBus
 from ..config import Config
 
-from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem, WallCollisionSystem
+from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem, WallCollisionSystem, PlayerControlledComponent
 from ..room import Floor, Position
 
 
@@ -19,6 +19,7 @@ class PlayScene(Scene):
         self._entity_manager.add_component(self._player, TransformComponent(32, 32, 150, 150))
         self._entity_manager.add_component(self._player, VelocityComponent(0, 0, 5))
         self._entity_manager.add_component(self._player, SpriteComponent(self._asset_manager.player_frames))
+        self._entity_manager.add_component(self._player, PlayerControlledComponent())
         self._floor: Floor = Floor(self._asset_manager, self._entity_manager, self._player)
         self._systems: list[System] = [
             InputSystem(self._entity_manager),
@@ -41,5 +42,5 @@ class PlayScene(Scene):
     def draw(self) -> None:
         _ = self._surface.fill((255, 0, 0))
         self._floor.draw(self._surface)
-        self._render_system.draw(self._surface)
+        self._render_system.draw(self._surface, [self._player] + self._floor.room_grid.room.enemies_ids)
 
