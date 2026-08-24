@@ -6,7 +6,7 @@ from ..asset_manager import AssetManager
 from ..event_bus import EventBus
 from ..config import Config
 
-from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem, WallCollisionSystem, PlayerControlledComponent
+from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem, WallCollisionSystem, PlayerControlledComponent, AIMovementSystem
 from ..room import Floor, Position
 
 
@@ -24,6 +24,7 @@ class PlayScene(Scene):
         self._systems: list[System] = [
             InputSystem(self._entity_manager),
             MovementSystem(self._entity_manager),
+            AIMovementSystem(self._entity_manager, self._player),
             WallCollisionSystem(self._entity_manager, self._floor.room_grid),
         ]
         self._render_system: RenderSystem = RenderSystem(self._entity_manager)

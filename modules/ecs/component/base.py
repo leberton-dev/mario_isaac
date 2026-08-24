@@ -5,3 +5,7 @@ class Component(ABC):
 
 class PlayerControlledComponent(Component):
     pass
+
+class AIControlledComponent(Component):
+    pass
+

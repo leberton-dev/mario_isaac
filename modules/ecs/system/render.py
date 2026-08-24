@@ -14,9 +14,11 @@ class RenderSystem(System):
     def update(self) -> None:
         pass
 
-    def draw(self, surface: pygame.Surface) -> None:
+    def draw(self, surface: pygame.Surface, entities_id: list[int]) -> None:
         entities = self._entity_manager.get_entities_with_components([TransformComponent, SpriteComponent])
         for key in entities.keys():
+            if key not in entities_id:
+                continue
             tra = self._entity_manager.get_component_from_entity(key, TransformComponent)
             spr = self._entity_manager.get_component_from_entity(key, SpriteComponent)
             assert isinstance(tra, TransformComponent)

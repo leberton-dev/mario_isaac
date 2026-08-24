@@ -1,4 +1,4 @@
-from .base import Component, PlayerControlledComponent
+from .base import Component, PlayerControlledComponent, AIControlledComponent
 from .sprite import SpriteComponent
 from .velocity import VelocityComponent
 from .transform import TransformComponent
