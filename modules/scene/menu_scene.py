@@ -2,9 +2,7 @@ import pygame
 from typing import override
 
 from .scene import Scene
-from ..asset_manager import AssetManager
-from ..event_bus import EventBus
-from ..config import Config
+from ..core import AssetManager, Config, EventBus
 from ..button import Button
 
 PLAY_PRESSED_EVENT_KEY = pygame.event.custom_type()
@@ -16,7 +14,7 @@ class MenuScene(Scene):
         width = screen_size[0]//2
         height = screen_size[1]//8
         self._play_button: Button = Button(self._surface, width, height)
-        self._play_button.setCords((screen_size[0] - width)//2, screen_size[1] // 6)
+        self._play_button.set_pos((screen_size[0] - width)//2, screen_size[1] // 6)
 
     @override
     def handle_event(self, event: pygame.event.Event) -> None:

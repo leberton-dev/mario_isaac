@@ -19,10 +19,10 @@ class RenderSystem(System):
         for key in entities.keys():
             if key not in entities_id:
                 continue
-            tra = self._entity_manager.get_component_from_entity(key, TransformComponent)
-            spr = self._entity_manager.get_component_from_entity(key, SpriteComponent)
-            assert isinstance(tra, TransformComponent)
-            assert isinstance(spr, SpriteComponent)
-            _ = surface.blit(spr.sprites[spr.current_sprite][f"frame_{spr.current_frame}"], tra.pos)
-            spr.set_next_frame()
+            transform = self._entity_manager.get_component(key, TransformComponent)
+            sprite = self._entity_manager.get_component(key, SpriteComponent)
+            assert isinstance(transform, TransformComponent)
+            assert isinstance(sprite, SpriteComponent)
+            _ = surface.blit(sprite.sprites[sprite.current_sprite][f"frame_{sprite.current_frame}"], transform.pos)
+            sprite.set_next_frame()
             

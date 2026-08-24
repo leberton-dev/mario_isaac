@@ -3,7 +3,7 @@ import pygame
 
 from .room import Room
 from ..ecs import EntityManager, TransformComponent
-from ..asset_manager import AssetManager
+from ..core import AssetManager
 
 
 _DIR_OFFSETS: dict[str, tuple[int ,int]] = {
@@ -25,7 +25,7 @@ class RoomGrid:
         self._create_rooms()
 
     @property
-    def room(self) -> Room:
+    def current_room(self) -> Room:
         return self._rooms[self._room_pos]
 
     def _create_rooms(self) -> None:
@@ -58,14 +58,14 @@ class RoomGrid:
         return (origin[0] + offset[0], origin[1] + offset[1]), origin
 
     def update(self) -> None:
-        if self.room.doors_open and self._is_player_on_door():
+        if self.current_room.doors_open and self._is_player_on_door():
             offset = self._get_door_direction()
             self._room_pos = (self._room_pos[0] + offset[0], self._room_pos[1] + offset[1])
             self._place_player_on_door()
             self._rooms[self._room_pos].create_enemies()
 
     def _get_door_direction(self) -> tuple[int, int]:
-        transform = self._entity_manager.get_component_from_entity(self._player_id, TransformComponent)
+        transform = self._entity_manager.get_component(self._player_id, TransformComponent)
         assert isinstance(transform, TransformComponent)
         tile_pos = transform.x // 32, transform.y // 32
         if tile_pos[0] == 0:
@@ -78,10 +78,10 @@ class RoomGrid:
             return _DIR_OFFSETS["bottom"]
 
     def draw(self, surface: pygame.Surface) -> None:
-        self.room.draw(surface)
+        self.current_room.draw(surface)
 
     def _place_player_on_door(self) -> None:
-        transform = self._entity_manager.get_component_from_entity(self._player_id, TransformComponent)
+        transform = self._entity_manager.get_component(self._player_id, TransformComponent)
         assert isinstance(transform, TransformComponent)
         tile_pos = transform.x // 32, transform.y // 32
         if tile_pos[0] == 0:
@@ -94,8 +94,8 @@ class RoomGrid:
             transform.y = 32
 
     def _is_player_on_door(self) -> bool:
-        transform = self._entity_manager.get_component_from_entity(self._player_id, TransformComponent)
+        transform = self._entity_manager.get_component(self._player_id, TransformComponent)
         assert isinstance(transform, TransformComponent)
         tile_pos = transform.x // 32, transform.y // 32
-        return self.room.is_on_door(tile_pos)
+        return self.current_room.is_on_door(tile_pos)
 

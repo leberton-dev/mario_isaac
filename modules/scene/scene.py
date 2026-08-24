@@ -1,9 +1,7 @@
 import pygame
 from abc import ABC, abstractmethod
 
-from ..asset_manager import AssetManager
-from ..event_bus import EventBus
-from ..config import Config
+from ..core import AssetManager, Config, EventBus
 
 
 class Scene(ABC):

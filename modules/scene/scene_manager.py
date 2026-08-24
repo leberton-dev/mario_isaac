@@ -5,7 +5,7 @@ class SceneManager:
         self._scenes: list[Scene] = []
 
     @property
-    def scene(self) -> Scene:
+    def current_scene(self) -> Scene:
         return self._scenes[len(self._scenes) - 1]
 
     def add(self, scene: Scene) -> None:

@@ -16,8 +16,8 @@ class InputSystem(System):
             return
         keys = pygame.key.get_pressed()
         for key in entities.keys():
-            vel = self._entity_manager.get_component_from_entity(key, VelocityComponent)
-            assert isinstance(vel, VelocityComponent)
-            vel.vel_x = vel.speed if keys[pygame.K_d] else -vel.speed if keys[pygame.K_a] else 0
-            vel.vel_y = vel.speed if keys[pygame.K_s] else -vel.speed if keys[pygame.K_w] else 0
+            velocity = self._entity_manager.get_component(key, VelocityComponent)
+            assert isinstance(velocity, VelocityComponent)
+            velocity.vel_x = velocity.speed if keys[pygame.K_d] else -velocity.speed if keys[pygame.K_a] else 0
+            velocity.vel_y = velocity.speed if keys[pygame.K_s] else -velocity.speed if keys[pygame.K_w] else 0
 

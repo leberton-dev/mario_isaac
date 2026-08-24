@@ -1,8 +1,7 @@
 import pygame
 
-from ..ecs import EntityManager, TransformComponent
-from ..asset_manager import AssetManager
-from .room import Room
+from ..ecs import EntityManager
+from ..core import AssetManager
 from .room_grid import RoomGrid
 
 class Floor:

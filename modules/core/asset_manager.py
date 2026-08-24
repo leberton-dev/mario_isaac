@@ -5,7 +5,7 @@ class AssetManager:
         self.player_frames: dict[str, dict[str, pygame.Surface]] = {}
         self.room_frames: dict[str, dict[str, pygame.Surface]] = {}
         self.enemy_frames: dict[str, dict[str, pygame.Surface]] = {}
-        self._init_player()
+        self._init_player_frames()
         self._init_room_frames()
         self._init_enemy_frames()
 
@@ -18,7 +18,7 @@ class AssetManager:
                 frames.append(sheet.subsurface(pygame.Rect(location, frame_size)))
         return frames
 
-    def _init_player(self) -> None:
+    def _init_player_frames(self) -> None:
         sheet: pygame.Surface = pygame.image.load("assets/player/player.png").convert_alpha()
         idle: list[pygame.Surface] = self._strip_from_sheet(sheet, [0, 0], [16, 16], 3)
 

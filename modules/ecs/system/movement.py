@@ -15,10 +15,10 @@ class MovementSystem(System):
         if len(entities) == 0:
             return
         for key in entities.keys():
-            vel = self._entity_manager.get_component_from_entity(key, VelocityComponent)
-            tra = self._entity_manager.get_component_from_entity(key, TransformComponent)
-            assert isinstance(vel, VelocityComponent)
-            assert isinstance(tra, TransformComponent)
-            tra.x += vel.vel_x
-            tra.y += vel.vel_y
+            velocity = self._entity_manager.get_component(key, VelocityComponent)
+            transform = self._entity_manager.get_component(key, TransformComponent)
+            assert isinstance(velocity, VelocityComponent)
+            assert isinstance(transform, TransformComponent)
+            transform.x += velocity.vel_x
+            transform.y += velocity.vel_y
 

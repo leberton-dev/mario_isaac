@@ -2,9 +2,7 @@ import pygame
 from typing import override
 
 from .scene import Scene
-from ..asset_manager import AssetManager
-from ..event_bus import EventBus
-from ..config import Config
+from ..core import AssetManager, Config, EventBus
 
 from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem, WallCollisionSystem, PlayerControlledComponent, AIMovementSystem
 from ..room import Floor, Position
@@ -43,5 +41,5 @@ class PlayScene(Scene):
     def draw(self) -> None:
         _ = self._surface.fill((255, 0, 0))
         self._floor.draw(self._surface)
-        self._render_system.draw(self._surface, [self._player] + self._floor.room_grid.room.enemies_ids)
+        self._render_system.draw(self._surface, [self._player] + self._floor.room_grid.current_room.enemies_ids)
 
