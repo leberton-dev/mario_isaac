@@ -20,7 +20,7 @@ class MenuScene(Scene):
     def handle_event(self, event: pygame.event.Event) -> None:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self._play_button.pressed(event.pos):
-                self._event_bus.emit(pygame.event.Event(PLAY_PRESSED_EVENT_KEY), {"scene": "hello"})
+                self._event_bus.emit(PLAY_PRESSED_EVENT_KEY, {"scene": "hello"})
 
     @override
     def update(self) -> None:

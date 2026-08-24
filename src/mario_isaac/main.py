@@ -4,8 +4,8 @@ from .scene import PlayScene, MenuScene, SceneManager, PLAY_PRESSED_EVENT_KEY
 from typing import Any
 from .ecs import EntityManager
 
-def _on_play_pressed(data: dict[str, Any]) -> None:
-    print('Hello')
+def _on_play_pressed(data: dict[str, Any]) -> None:                                 # pyright: ignore[reportExplicitAny]
+    print(f"play pressed, payload={data}")
 
 def main() -> None:
     _ = pygame.init()
@@ -26,7 +26,7 @@ def main() -> None:
     menu_scene: MenuScene = MenuScene(virtual_screen, asset_manager, event_bus, config)
     play_scene: PlayScene = PlayScene(virtual_screen, asset_manager, event_bus, config, EntityManager())
     scene_manager.add(menu_scene)
-    event_bus.subscribe(PLAY_PRESSED_EVENT_KEY, _on_play_pressed)                         # pyright: ignore[reportArgumentType]
+    event_bus.subscribe(PLAY_PRESSED_EVENT_KEY, _on_play_pressed)
 
     while running:
         for event in pygame.event.get():

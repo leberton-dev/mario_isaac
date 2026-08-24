@@ -12,7 +12,7 @@ class PlayScene(Scene):
     def __init__(self, surface: pygame.Surface, asset_manager: AssetManager, bus: EventBus, config: Config, entity_manager: EntityManager) -> None:
         super().__init__(surface, asset_manager, bus, config)
         self._asset_manager: AssetManager = asset_manager
-        self._entity_manager: EntityManager = EntityManager()
+        self._entity_manager: EntityManager = entity_manager
         self._player: int = self._entity_manager.create_entity()
         self._entity_manager.add_component(self._player, TransformComponent(32, 32, 150, 150))
         self._entity_manager.add_component(self._player, VelocityComponent(0, 0, 5))
