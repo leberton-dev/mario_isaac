@@ -1,5 +1,6 @@
 import configparser
 from dataclasses import dataclass
+from pathlib import Path
 
 
 @dataclass
@@ -15,7 +16,8 @@ class ScreenConfig:
 class Config:
     def __init__(self) -> None:
         self._parser: configparser.ConfigParser = configparser.ConfigParser()
-        _ = self._parser.read("modules/config.ini")
+        config_path = Path(__file__).resolve().parent.parent / "config.ini"
+        _ = self._parser.read(config_path)
         self.screen: ScreenConfig
         self.virtual_screen: ScreenConfig
 

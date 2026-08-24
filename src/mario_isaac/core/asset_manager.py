@@ -1,4 +1,8 @@
 import pygame
+from pathlib import Path
+
+
+_ASSETS_DIR = Path(__file__).resolve().parent.parent / "assets"
 
 class AssetManager:
     def __init__(self) -> None:
@@ -19,7 +23,7 @@ class AssetManager:
         return frames
 
     def _init_player_frames(self) -> None:
-        sheet: pygame.Surface = pygame.image.load("assets/player/player.png").convert_alpha()
+        sheet: pygame.Surface = pygame.image.load(_ASSETS_DIR / "player" / "player.png").convert_alpha()
         idle: list[pygame.Surface] = self._strip_from_sheet(sheet, [0, 0], [16, 16], 3)
 
         self.player_frames["idle"] = {}
@@ -28,7 +32,7 @@ class AssetManager:
         self.player_frames["idle"]["frame_2"] = pygame.transform.scale(idle[2], (32, 32))
 
     def _init_enemy_frames(self) -> None:
-        sheet: pygame.Surface = pygame.image.load("assets/enemy.png").convert_alpha()
+        sheet: pygame.Surface = pygame.image.load(_ASSETS_DIR / "enemy.png").convert_alpha()
         idle: list[pygame.Surface] = self._strip_from_sheet(sheet, [0, 0], [16, 16], 3)
 
         self.enemy_frames["idle"] = {}
@@ -37,11 +41,11 @@ class AssetManager:
         self.enemy_frames["idle"]["frame_2"] = pygame.transform.scale(idle[2], (32, 32))
 
     def _init_room_frames(self) -> None:
-        stone = pygame.image.load("assets/room/floor_stone.png").convert_alpha()
-        stonebrick = pygame.image.load("assets/room/stone_brick.png").convert_alpha()
-        door_open = pygame.image.load("assets/room/door_open.png").convert_alpha()
-        door_closed = pygame.image.load("assets/room/door_closed.png").convert_alpha()
-        wall = pygame.image.load("assets/room/wall.png").convert_alpha()
+        stone = pygame.image.load(_ASSETS_DIR / "room" / "floor_stone.png").convert_alpha()
+        stonebrick = pygame.image.load(_ASSETS_DIR / "room" / "stone_brick.png").convert_alpha()
+        door_open = pygame.image.load(_ASSETS_DIR / "room" / "door_open.png").convert_alpha()
+        door_closed = pygame.image.load(_ASSETS_DIR / "room" / "door_closed.png").convert_alpha()
+        wall = pygame.image.load(_ASSETS_DIR / "room" / "wall.png").convert_alpha()
 
         self.room_frames["floor"] = {}
         self.room_frames["floor"]["stone_0"] = pygame.transform.scale(stone, (32, 32))
