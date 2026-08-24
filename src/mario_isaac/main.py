@@ -1,8 +1,11 @@
-import pygame
-from .core import AssetManager, Config, EventBus
-from .scene import PlayScene, MenuScene, SceneManager, PLAY_PRESSED_EVENT_KEY
 from typing import Any
+
+import pygame
+
+from .core import AssetManager, Config, EventBus
 from .ecs import EntityManager
+from .scene import PLAY_PRESSED_EVENT_KEY, MenuScene, PlayScene, SceneManager
+
 
 def _on_play_pressed(data: dict[str, Any]) -> None:                                 # pyright: ignore[reportExplicitAny]
     print(f"play pressed, payload={data}")

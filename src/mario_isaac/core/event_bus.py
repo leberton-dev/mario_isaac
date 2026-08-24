@@ -1,5 +1,7 @@
+from collections.abc import Callable
+from typing import Any
+
 import pygame
-from typing import Callable, Any
 
 
 class EventBus:

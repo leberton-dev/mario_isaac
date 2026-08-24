@@ -1,9 +1,15 @@
 import math
-from typing import override, TYPE_CHECKING
+from typing import TYPE_CHECKING, override
 
-from .base import System
+from ..component import (
+    AIControlledComponent,
+    CollisionComponent,
+    TransformComponent,
+    VelocityComponent,
+)
 from ..entity_manager import EntityManager
-from ..component import VelocityComponent, TransformComponent, AIControlledComponent, CollisionComponent
+from .base import System
+
 if TYPE_CHECKING:
     from ...room import RoomGrid
 
@@ -16,7 +22,7 @@ class AIMovementSystem(System):
     def __init__(self, entity_manager: EntityManager, player_id: int, room_grid: "RoomGrid") -> None:
         super().__init__(entity_manager)
         self._player_id: int = player_id
-        self._room_grid: "RoomGrid" = room_grid
+        self._room_grid: RoomGrid = room_grid
 
     @override
     def update(self) -> None:
@@ -28,7 +34,7 @@ class AIMovementSystem(System):
         if len(entities) == 0:
             return
 
-        for key in entities.keys():
+        for key in entities:
 
             velocity = self._entity_manager.get_component(key, VelocityComponent)
             transform = self._entity_manager.get_component(key, TransformComponent)

@@ -1,9 +1,18 @@
-import pygame
 import random
 from typing import NamedTuple
 
-from ..ecs import EntityManager, TransformComponent, SpriteComponent, VelocityComponent, AIControlledComponent, CollisionComponent
+import pygame
+
 from ..core import AssetManager
+from ..ecs import (
+    AIControlledComponent,
+    CollisionComponent,
+    EntityManager,
+    SpriteComponent,
+    TransformComponent,
+    VelocityComponent,
+)
+
 
 class Size(NamedTuple):
     width: int
@@ -100,9 +109,7 @@ class Room:
     def _create_walls(self) -> None:
         for x in range(self._size.width):
             for y in range(self._size.height):
-                if (x == 0 or x == self._size.width - 1) and (x, y) not in self._doors:
-                    self._walls.append(Position(x, y))
-                elif (y == 0 or y == self._size.height - 1) and (x, y) not in self._doors:
+                if (x == 0 or x == self._size.width - 1) and (x, y) not in self._doors or (y == 0 or y == self._size.height - 1) and (x, y) not in self._doors:
                     self._walls.append(Position(x, y))
 
     def draw(self, surface: pygame.Surface) -> None:

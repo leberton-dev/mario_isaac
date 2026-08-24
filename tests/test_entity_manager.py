@@ -1,7 +1,7 @@
 import pytest
 
-from mario_isaac.ecs.entity_manager import EntityManager
 from mario_isaac.ecs.component import TransformComponent, VelocityComponent
+from mario_isaac.ecs.entity_manager import EntityManager
 
 
 def test_create_entity_returns_incrementing_ids():

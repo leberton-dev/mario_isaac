@@ -1,11 +1,24 @@
-import pygame
 from typing import override
 
-from .scene import Scene
-from ..core import AssetManager, Config, EventBus
+import pygame
 
-from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem, WallCollisionSystem, PlayerControlledComponent, AIMovementSystem, CollisionComponent, EntityCollisionSystem
-from ..room import Floor, Position
+from ..core import AssetManager, Config, EventBus
+from ..ecs import (
+    AIMovementSystem,
+    CollisionComponent,
+    EntityManager,
+    InputSystem,
+    MovementSystem,
+    PlayerControlledComponent,
+    RenderSystem,
+    SpriteComponent,
+    System,
+    TransformComponent,
+    VelocityComponent,
+    WallCollisionSystem,
+)
+from ..room import Floor
+from .scene import Scene
 
 
 class PlayScene(Scene):

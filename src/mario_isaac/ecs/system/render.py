@@ -1,9 +1,10 @@
-import pygame
 from typing import override
 
-from .base import System
+import pygame
+
+from ..component import SpriteComponent, TransformComponent
 from ..entity_manager import EntityManager
-from ..component import TransformComponent, SpriteComponent
+from .base import System
 
 
 class RenderSystem(System):
@@ -16,7 +17,7 @@ class RenderSystem(System):
 
     def draw(self, surface: pygame.Surface, entities_id: list[int]) -> None:
         entities = self._entity_manager.get_entities_with_components([TransformComponent, SpriteComponent])
-        for key in entities.keys():
+        for key in entities:
             if key not in entities_id:
                 continue
             transform = self._entity_manager.get_component(key, TransformComponent)

@@ -1,5 +1,5 @@
-from .base import Component, PlayerControlledComponent, AIControlledComponent
-from .sprite import SpriteComponent
-from .velocity import VelocityComponent
-from .transform import TransformComponent
+from .base import AIControlledComponent, Component, PlayerControlledComponent
 from .collision import CollisionComponent
+from .sprite import SpriteComponent
+from .transform import TransformComponent
+from .velocity import VelocityComponent

@@ -1,9 +1,10 @@
-import pygame
 from typing import override
 
-from .scene import Scene
-from ..core import AssetManager, Config, EventBus
+import pygame
+
 from ..button import Button
+from ..core import AssetManager, Config, EventBus
+from .scene import Scene
 
 PLAY_PRESSED_EVENT_KEY = pygame.event.custom_type()
 
@@ -18,9 +19,8 @@ class MenuScene(Scene):
 
     @override
     def handle_event(self, event: pygame.event.Event) -> None:
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self._play_button.pressed(event.pos):
-                self._event_bus.emit(PLAY_PRESSED_EVENT_KEY, {"scene": "hello"})
+        if event.type == pygame.MOUSEBUTTONDOWN and self._play_button.pressed(event.pos):
+            self._event_bus.emit(PLAY_PRESSED_EVENT_KEY, {"scene": "hello"})
 
     @override
     def update(self) -> None:

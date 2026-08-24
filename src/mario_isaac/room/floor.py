@@ -1,8 +1,9 @@
 import pygame
 
-from ..ecs import EntityManager
 from ..core import AssetManager
+from ..ecs import EntityManager
 from .room_grid import RoomGrid
+
 
 class Floor:
     def __init__(self, asset_manager: AssetManager, entity_manager: EntityManager, player_id: int) -> None:
