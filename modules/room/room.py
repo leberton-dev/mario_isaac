@@ -2,7 +2,7 @@ import pygame
 import random
 from typing import NamedTuple
 
-from ..ecs import EntityManager, TransformComponent, SpriteComponent, VelocityComponent, AIControlledComponent
+from ..ecs import EntityManager, TransformComponent, SpriteComponent, VelocityComponent, AIControlledComponent, CollisionComponent
 from ..core import AssetManager
 
 class Size(NamedTuple):
@@ -71,6 +71,7 @@ class Room:
             self._entity_manager.add_component(enemy_id, SpriteComponent(self._asset_manager.enemy_frames))
             self._entity_manager.add_component(enemy_id, VelocityComponent(0, 0, 2))
             self._entity_manager.add_component(enemy_id, AIControlledComponent())
+            self._entity_manager.add_component(enemy_id, CollisionComponent(32, 32))
             self._enemy_ids.append(enemy_id)
         self._enemies_spawned = True
 

@@ -4,7 +4,7 @@ from typing import override
 from .scene import Scene
 from ..core import AssetManager, Config, EventBus
 
-from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem, WallCollisionSystem, PlayerControlledComponent, AIMovementSystem
+from ..ecs import EntityManager, TransformComponent, VelocityComponent, SpriteComponent, System, MovementSystem, InputSystem, RenderSystem, WallCollisionSystem, PlayerControlledComponent, AIMovementSystem, CollisionComponent
 from ..room import Floor, Position
 
 
@@ -18,6 +18,7 @@ class PlayScene(Scene):
         self._entity_manager.add_component(self._player, VelocityComponent(0, 0, 5))
         self._entity_manager.add_component(self._player, SpriteComponent(self._asset_manager.player_frames))
         self._entity_manager.add_component(self._player, PlayerControlledComponent())
+        self._entity_manager.add_component(self._player, CollisionComponent(32, 32))
         self._floor: Floor = Floor(self._asset_manager, self._entity_manager, self._player)
         self._systems: list[System] = [
             InputSystem(self._entity_manager),
