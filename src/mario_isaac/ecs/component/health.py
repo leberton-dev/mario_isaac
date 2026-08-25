@@ -2,11 +2,10 @@ from mario_isaac.ecs.component.base import Component
 
 
 class HealthComponent(Component):
-    INVULNERABILITY_FRAMES: int = 60
-
-    def __init__(self, max_hp: int) -> None:
+    def __init__(self, max_hp: int, invulnerability_duration: int = 60) -> None:
         self._max_hp: int = max_hp
         self._current_hp: int = max_hp
+        self._invulnerability_duration: int = invulnerability_duration
         self._invulnerability_frames: int = 0
 
     @property
@@ -26,7 +25,7 @@ class HealthComponent(Component):
             return False
 
         self._current_hp = max(0, self._current_hp - amount)
-        self._invulnerability_frames = self.INVULNERABILITY_FRAMES
+        self._invulnerability_frames = self._invulnerability_duration
         return True
 
     def tick_invulnerability(self) -> None:

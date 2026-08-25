@@ -24,10 +24,10 @@ def test_take_damage_respects_invulnerability_window():
 
 
 def test_invulnerability_expires_after_ticking():
-    health = HealthComponent(max_hp=6)
+    health = HealthComponent(max_hp=6, invulnerability_duration=3)
     _ = health.damage(1)
 
-    for _ in range(HealthComponent.INVULNERABILITY_FRAMES):
+    for _ in range(3):
         health.tick_invulnerability()
 
     assert health.damage(1) is True
@@ -43,4 +43,12 @@ def test_alive():
     assert not health.alive
 
 
+def test_zero_invulnerability_duration_allows_immediate_repeat_hits():
+    health = HealthComponent(max_hp=3, invulnerability_duration=0)
+
+    assert health.damage(1) is True
+    assert health.damage(1) is True
+    assert health.damage(1) is True
+    assert health.hp == 0
+    assert not health.alive
 

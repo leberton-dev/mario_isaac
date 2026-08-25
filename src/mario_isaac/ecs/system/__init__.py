@@ -3,5 +3,8 @@ from .base import System
 from .damage import DamageSystem
 from .input import InputSystem
 from .movement import MovementSystem
+from .projectile import ProjectileSystem
+from .projectile_render import ProjectileRenderSystem
 from .render import RenderSystem
+from .shooting import ShootingSystem
 from .wall_collision import WallCollisionSystem
