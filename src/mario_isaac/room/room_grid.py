@@ -2,7 +2,7 @@ import random
 
 import pygame
 
-from ..core import AssetManager
+from ..core import TILE_SIZE, AssetManager
 from ..ecs import EntityManager, TransformComponent
 from .room import Room
 
@@ -66,7 +66,7 @@ class RoomGrid:
 
     def _get_door_direction(self) -> tuple[int, int]:
         transform = self._entity_manager.get_component(self._player_id, TransformComponent)
-        tile_pos = transform.x // 32, transform.y // 32
+        tile_pos = transform.x // TILE_SIZE, transform.y // TILE_SIZE
         if tile_pos[0] == 0:
             return _DIR_OFFSETS["left"]
         elif tile_pos[0] == 19:
@@ -81,18 +81,18 @@ class RoomGrid:
 
     def _place_player_on_door(self) -> None:
         transform = self._entity_manager.get_component(self._player_id, TransformComponent)
-        tile_pos = transform.x // 32, transform.y // 32
+        tile_pos = transform.x // TILE_SIZE, transform.y // TILE_SIZE
         if tile_pos[0] == 0:
-            transform.x = 18 * 32
+            transform.x = 18 * TILE_SIZE
         elif tile_pos[0] == 19:
-            transform.x = 32
+            transform.x = TILE_SIZE
         elif tile_pos[1] == 0:
-            transform.y = 9 * 32
+            transform.y = 9 * TILE_SIZE
         elif tile_pos[1] == 10:
-            transform.y = 32
+            transform.y = TILE_SIZE
 
     def _is_player_on_door(self) -> bool:
         transform = self._entity_manager.get_component(self._player_id, TransformComponent)
-        tile_pos = transform.x // 32, transform.y // 32
+        tile_pos = transform.x // TILE_SIZE, transform.y // TILE_SIZE
         return self.current_room.is_on_door(tile_pos)
 

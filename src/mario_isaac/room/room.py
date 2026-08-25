@@ -3,7 +3,7 @@ from typing import NamedTuple
 
 import pygame
 
-from ..core import AssetManager
+from ..core import TILE_SIZE, AssetManager
 from ..ecs import (
     AIControlledComponent,
     CollisionComponent,
@@ -32,11 +32,11 @@ class Position(NamedTuple):
 
     @property
     def px_x(self) -> int:
-        return self.x*32
+        return self.x*TILE_SIZE
 
     @property
     def px_y(self) -> int:
-        return self.y*32
+        return self.y*TILE_SIZE
 
 class Room:
     def __init__(self, asset_manager: AssetManager, entity_manager: EntityManager, doors_dir: set[str]) -> None:
@@ -76,11 +76,11 @@ class Room:
             enemy_id = self._entity_manager.create_entity()
             pos_x = random.randint(1, 18)
             pos_y = random.randint(1, 9)
-            self._entity_manager.add_component(enemy_id, TransformComponent(32, 32, pos_x*32, pos_y*32))
+            self._entity_manager.add_component(enemy_id, TransformComponent(TILE_SIZE, TILE_SIZE, pos_x*TILE_SIZE, pos_y*TILE_SIZE))
             self._entity_manager.add_component(enemy_id, SpriteComponent(self._asset_manager.enemy_frames))
             self._entity_manager.add_component(enemy_id, VelocityComponent(0, 0, 2))
             self._entity_manager.add_component(enemy_id, AIControlledComponent())
-            self._entity_manager.add_component(enemy_id, CollisionComponent(32, 32))
+            self._entity_manager.add_component(enemy_id, CollisionComponent(TILE_SIZE, TILE_SIZE))
             self._enemy_ids.append(enemy_id)
         self._enemies_spawned = True
 
@@ -115,7 +115,7 @@ class Room:
     def draw(self, surface: pygame.Surface) -> None:
         for x in range(self._size.width):
             for y in range(self._size.height):
-                _ = surface.blit(self._textures[x][y], (x*32, y*32))
+                _ = surface.blit(self._textures[x][y], (x*TILE_SIZE, y*TILE_SIZE))
         for wall in self._walls:
             _ = surface.blit(self._asset_manager.room_frames["wall"]["first"], wall.px_as_tuple)
         for door in self._doors:
