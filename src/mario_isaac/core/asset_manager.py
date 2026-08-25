@@ -26,12 +26,11 @@ class AssetManager:
 
     def _init_player_frames(self) -> None:
         sheet: pygame.Surface = pygame.image.load(_ASSETS_DIR / "player" / "player.png").convert_alpha()
-        idle: list[pygame.Surface] = self._strip_from_sheet(sheet, [0, 0], [16, 16], 3)
+        idle: list[pygame.Surface] = self._strip_from_sheet(sheet, [0, 0], [32, 32], 2)
 
         self.player_frames["idle"] = {}
         self.player_frames["idle"]["frame_0"] = pygame.transform.scale(idle[0], (TILE_SIZE, TILE_SIZE))
         self.player_frames["idle"]["frame_1"] = pygame.transform.scale(idle[1], (TILE_SIZE, TILE_SIZE))
-        self.player_frames["idle"]["frame_2"] = pygame.transform.scale(idle[2], (TILE_SIZE, TILE_SIZE))
 
     def _init_enemy_frames(self) -> None:
         sheet: pygame.Surface = pygame.image.load(_ASSETS_DIR / "enemy.png").convert_alpha()
