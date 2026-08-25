@@ -38,7 +38,6 @@ class PlayScene(Scene):
             AIMovementSystem(self._entity_manager, self._player, self._floor.room_grid),
             MovementSystem(self._entity_manager),
             WallCollisionSystem(self._entity_manager, self._floor.room_grid),
-            # EntityCollisionSystem(self._entity_manager, self._floor.room_grid)
         ]
         self._render_system: RenderSystem = RenderSystem(self._entity_manager)
 
