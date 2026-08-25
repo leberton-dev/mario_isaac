@@ -8,6 +8,7 @@ from ..ecs import (
     AIControlledComponent,
     CollisionComponent,
     EntityManager,
+    HealthComponent,
     SpriteComponent,
     TransformComponent,
     VelocityComponent,
@@ -81,8 +82,12 @@ class Room:
             self._entity_manager.add_component(enemy_id, VelocityComponent(0, 0, 2))
             self._entity_manager.add_component(enemy_id, AIControlledComponent())
             self._entity_manager.add_component(enemy_id, CollisionComponent(TILE_SIZE, TILE_SIZE))
+            self._entity_manager.add_component(enemy_id, HealthComponent(3, invulnerability_duration=0))
             self._enemy_ids.append(enemy_id)
         self._enemies_spawned = True
+
+    def remove_enemy(self, enemy_id: int) -> None:
+        self._enemy_ids.remove(enemy_id)
 
     def _build_floor_tiles(self) -> None:
         stone = self._asset_manager.room_frames["floor"]["stone_0"]

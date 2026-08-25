@@ -12,7 +12,10 @@ from ..ecs import (
     InputSystem,
     MovementSystem,
     PlayerControlledComponent,
+    ProjectileRenderSystem,
+    ProjectileSystem,
     RenderSystem,
+    ShootingSystem,
     SpriteComponent,
     System,
     TransformComponent,
@@ -38,12 +41,15 @@ class PlayScene(Scene):
         self._floor: Floor = Floor(self._asset_manager, self._entity_manager, self._player)
         self._systems: list[System] = [
             InputSystem(self._entity_manager),
+            ShootingSystem(self._entity_manager, self._player),
             AIMovementSystem(self._entity_manager, self._player, self._floor.room_grid),
             MovementSystem(self._entity_manager),
+            ProjectileSystem(self._entity_manager, self._floor.room_grid),
             WallCollisionSystem(self._entity_manager, self._floor.room_grid),
             DamageSystem(self._entity_manager, self._player, self._floor.room_grid)
         ]
         self._render_system: RenderSystem = RenderSystem(self._entity_manager)
+        self._projectile_render_system: ProjectileRenderSystem = ProjectileRenderSystem(self._entity_manager)
 
     @override
     def handle_event(self, event: pygame.event.Event) -> None:
@@ -60,4 +66,5 @@ class PlayScene(Scene):
         _ = self._surface.fill((255, 0, 0))
         self._floor.draw(self._surface)
         self._render_system.draw(self._surface, [self._player] + self._floor.room_grid.current_room.enemy_ids)
+        self._projectile_render_system.draw(self._surface)
 

@@ -4,6 +4,7 @@ from .component import (
     Component,
     HealthComponent,
     PlayerControlledComponent,
+    ProjectileComponent,
     SpriteComponent,
     TransformComponent,
     VelocityComponent,
@@ -14,7 +15,10 @@ from .system import (
     DamageSystem,
     InputSystem,
     MovementSystem,
+    ProjectileRenderSystem,
+    ProjectileSystem,
     RenderSystem,
+    ShootingSystem,
     System,
     WallCollisionSystem,
 )
