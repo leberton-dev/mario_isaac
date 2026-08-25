@@ -34,16 +34,17 @@ def test_add_component_ignores_unknown_entity():
     # entity id that was never created ( entity > self._last )
 
 
-def test_add_component_does_not_duplicate_same_instance():
+def test_add_component_twice_overwrites_the_previous_one():
     manager = EntityManager()
     entity = manager.create_entity()
-    transform = TransformComponent(32, 32, 0, 0)
+    first = TransformComponent(32, 32, 0, 0)
+    second = TransformComponent(32, 32, 0, 0)
 
-    manager.add_component(entity, transform)
-    manager.add_component(entity, transform)
+    manager.add_component(entity, first)
+    manager.add_component(entity, second)
 
-    entities = manager.get_entities_with_component(TransformComponent)
-    assert len(entities) == 1
+    assert manager.get_component(entity, TransformComponent) is second
+    assert manager.get_entities_with_component(TransformComponent) == [entity]
 
 
 def test_get_entities_with_component_filters_correctly():
@@ -60,6 +61,21 @@ def test_get_entities_with_component_filters_correctly():
     assert without_transform not in result
 
 
+def test_get_entities_with_components_requires_all():
+    manager = EntityManager()
+    both = manager.create_entity()
+    manager.add_component(both, TransformComponent(32, 32, 0, 0))
+    manager.add_component(both, VelocityComponent(0, 0, 5))
+
+    only_transform = manager.create_entity()
+    manager.add_component(only_transform, TransformComponent(32, 32, 0, 0))
+    
+    result = manager.get_entities_with_components([TransformComponent, VelocityComponent])
+    
+    assert both in result
+    assert only_transform not in result
+
+
 def test_remove_entity():
     manager = EntityManager()
     entity = manager.create_entity()
@@ -67,14 +83,15 @@ def test_remove_entity():
 
     manager.remove_entity(entity)
 
-    assert manager.get_entities_with_component(TransformComponent) == {}
+    assert manager.get_entities_with_component(TransformComponent) == []
 
 
-@pytest.mark.xfail(reason="add_component crashes with KeyError after remove_entity", strict=True)
 def test_add_component_after_remove_entity_does_not_crash():
     manager = EntityManager()
     entity = manager.create_entity()
     manager.remove_entity(entity)
 
     manager.add_component(entity, TransformComponent(32, 32, 0, 0))
+
+    assert manager.get_entities_with_component(TransformComponent) == []
 

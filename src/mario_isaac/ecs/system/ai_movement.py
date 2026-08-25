@@ -39,9 +39,6 @@ class AIMovementSystem(System):
             velocity = self._entity_manager.get_component(key, VelocityComponent)
             transform = self._entity_manager.get_component(key, TransformComponent)
             collision = self._entity_manager.get_component(key, CollisionComponent)
-            assert isinstance(velocity, VelocityComponent)
-            assert isinstance(transform, TransformComponent)
-            assert isinstance(collision, CollisionComponent)
 
             other_entities: list[int] = self._room_grid.current_room.enemy_ids + [self._player_id]
             other_entities.remove(key)

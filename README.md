@@ -18,6 +18,8 @@ uv run python -m mario_isaac.main
 - `src/mario_isaac/room/` - dungeon layout: `RoomGrid` procedurally generates the room graph, `Room` holds per-room floor/walls/enemies.
 - `src/mario_isaac/core/` - cross-cutting services: `Config`, `AssetManager`, `EventBus`.
 
+### Design decisions
+- `AIMovementSystem`, `WallCollisionSystem`, and `EntityCollisionSystem` depend directly on `RoomGrid` instead of representing walls as ECS entities. This is a deliberate choice not overseight.
 
 ## Developement
 

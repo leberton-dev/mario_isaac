@@ -17,8 +17,6 @@ class MovementSystem(System):
         for key in entities:
             velocity = self._entity_manager.get_component(key, VelocityComponent)
             transform = self._entity_manager.get_component(key, TransformComponent)
-            assert isinstance(velocity, VelocityComponent)
-            assert isinstance(transform, TransformComponent)
             transform.x += velocity.vel_x
             transform.y += velocity.vel_y
 

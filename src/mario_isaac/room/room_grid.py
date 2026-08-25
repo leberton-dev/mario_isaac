@@ -66,7 +66,6 @@ class RoomGrid:
 
     def _get_door_direction(self) -> tuple[int, int]:
         transform = self._entity_manager.get_component(self._player_id, TransformComponent)
-        assert isinstance(transform, TransformComponent)
         tile_pos = transform.x // 32, transform.y // 32
         if tile_pos[0] == 0:
             return _DIR_OFFSETS["left"]
@@ -82,7 +81,6 @@ class RoomGrid:
 
     def _place_player_on_door(self) -> None:
         transform = self._entity_manager.get_component(self._player_id, TransformComponent)
-        assert isinstance(transform, TransformComponent)
         tile_pos = transform.x // 32, transform.y // 32
         if tile_pos[0] == 0:
             transform.x = 18 * 32
@@ -95,7 +93,6 @@ class RoomGrid:
 
     def _is_player_on_door(self) -> bool:
         transform = self._entity_manager.get_component(self._player_id, TransformComponent)
-        assert isinstance(transform, TransformComponent)
         tile_pos = transform.x // 32, transform.y // 32
         return self.current_room.is_on_door(tile_pos)
 
