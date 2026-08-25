@@ -2,6 +2,7 @@ from .component import (
     AIControlledComponent,
     CollisionComponent,
     Component,
+    HealthComponent,
     PlayerControlledComponent,
     SpriteComponent,
     TransformComponent,
@@ -10,6 +11,7 @@ from .component import (
 from .entity_manager import EntityManager
 from .system import (
     AIMovementSystem,
+    DamageSystem,
     InputSystem,
     MovementSystem,
     RenderSystem,

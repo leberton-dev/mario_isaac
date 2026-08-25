@@ -6,7 +6,9 @@ from ..core import TILE_SIZE, AssetManager, Config, EventBus
 from ..ecs import (
     AIMovementSystem,
     CollisionComponent,
+    DamageSystem,
     EntityManager,
+    HealthComponent,
     InputSystem,
     MovementSystem,
     PlayerControlledComponent,
@@ -32,12 +34,14 @@ class PlayScene(Scene):
         self._entity_manager.add_component(self._player, SpriteComponent(self._asset_manager.player_frames))
         self._entity_manager.add_component(self._player, PlayerControlledComponent())
         self._entity_manager.add_component(self._player, CollisionComponent(TILE_SIZE, TILE_SIZE))
+        self._entity_manager.add_component(self._player, HealthComponent(6))
         self._floor: Floor = Floor(self._asset_manager, self._entity_manager, self._player)
         self._systems: list[System] = [
             InputSystem(self._entity_manager),
             AIMovementSystem(self._entity_manager, self._player, self._floor.room_grid),
             MovementSystem(self._entity_manager),
             WallCollisionSystem(self._entity_manager, self._floor.room_grid),
+            DamageSystem(self._entity_manager, self._player, self._floor.room_grid)
         ]
         self._render_system: RenderSystem = RenderSystem(self._entity_manager)
 
