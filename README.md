@@ -1,6 +1,6 @@
 # Mario Isaac
 
-A Binding of Isaac-like built with Ptthon and pygame.
+A Binding of Isaac-like built with Python and pygame.
 
 ## Setup
 
@@ -19,9 +19,10 @@ uv run python -m mario_isaac.main
 - `src/mario_isaac/core/` - cross-cutting services: `Config`, `AssetManager`, `EventBus`.
 
 ### Design decisions
-- `AIMovementSystem`, `WallCollisionSystem`, and `EntityCollisionSystem` depend directly on `RoomGrid` instead of representing walls as ECS entities. This is a deliberate choice not overseight.
+- `AIMovementSystem` and `WallCollisionSystem` depend directly on `RoomGrid` instead of representing walls as ECS entities. This is a deliberate choice not overseight: level geometry is static per room and doesn't need the full entity/component machinery. Revisit only if walls need to become dynamic (destrucible/movable).
+- Entity-vs-entity collision uses circular, soft separation (`AIMovementSystem`, treating `CollisionComponent.width` as a diameter) rather than rectangular hard collision -- matches the Binding of Isaac style this project is going for. 
 
-## Developement
+## Development
 
 ```bash
 uv run pytest   # once test exist

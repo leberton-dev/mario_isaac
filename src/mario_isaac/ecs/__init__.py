@@ -10,7 +10,6 @@ from .component import (
 from .entity_manager import EntityManager
 from .system import (
     AIMovementSystem,
-    EntityCollisionSystem,
     InputSystem,
     MovementSystem,
     RenderSystem,
