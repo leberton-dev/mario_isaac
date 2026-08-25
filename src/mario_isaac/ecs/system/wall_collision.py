@@ -27,7 +27,9 @@ class WallCollisionSystem(System):
             velocity = self._entity_manager.get_component(key, VelocityComponent)
             collision = self._entity_manager.get_component(key, CollisionComponent)
 
-            old_pos = (int(transform.x - velocity.vel_x), int(transform.y - velocity.vel_y))
             rect = pygame.Rect(transform.x, transform.y, collision.width, collision.height)
+            if rect.collidelist(wall_rects) == -1:
+                continue
 
+            old_pos = (transform.x - velocity.vel_x, transform.y - velocity.vel_y)
             transform.x, transform.y = resolve_aabb_collision(rect, old_pos, wall_rects)

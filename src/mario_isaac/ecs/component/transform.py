@@ -2,17 +2,17 @@ from .base import Component
 
 
 class TransformComponent(Component):
-    def __init__(self, width: int, height: int, x: int, y: int) -> None:
+    def __init__(self, width: int, height: int, x: float, y: float) -> None:
         self.width: int = width
         self.height: int = height
-        self.x: int = x
-        self.y: int = y
+        self.x: float = x
+        self.y: float = y
 
     @property
     def size(self) -> tuple[int, int]:
         return self.width, self.height
 
     @property
-    def pos(self) -> tuple[int, int]:
+    def pos(self) -> tuple[float, float]:
         return self.x, self.y
 
