@@ -3,9 +3,9 @@ import pygame
 
 def resolve_aabb_collision(
         rect: pygame.Rect,
-        old_pos: tuple[int, int],
+        old_pos: tuple[float, float],
         obstacles: list[pygame.Rect]
-    ) -> tuple[int, int]:
+    ) -> tuple[float, float]:
 
     if rect.collidelist(obstacles) == -1:
         return rect.x, rect.y
