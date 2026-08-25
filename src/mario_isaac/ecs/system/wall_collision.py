@@ -25,9 +25,6 @@ class WallCollisionSystem(System):
             transform = self._entity_manager.get_component(key, TransformComponent)
             velocity = self._entity_manager.get_component(key, VelocityComponent)
             collision = self._entity_manager.get_component(key, CollisionComponent)
-            assert isinstance(transform, TransformComponent)
-            assert isinstance(velocity, VelocityComponent)
-            assert isinstance(collision, CollisionComponent)
 
             old_x = transform.x - velocity.vel_x
             old_y = transform.y - velocity.vel_y

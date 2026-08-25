@@ -26,8 +26,6 @@ class EntityCollisionSystem(System):
 
             transform = self._entity_manager.get_component(entity_id, TransformComponent)
             collision = self._entity_manager.get_component(entity_id, CollisionComponent)
-            assert isinstance(transform, TransformComponent)
-            assert isinstance(collision, CollisionComponent)
 
             rect = pygame.Rect(transform.x, transform.y, collision.width, collision.height)
             entity_rects.append(rect)
@@ -37,9 +35,6 @@ class EntityCollisionSystem(System):
             transform = self._entity_manager.get_component(entity_id, TransformComponent)
             velocity = self._entity_manager.get_component(entity_id, VelocityComponent)
             collision = self._entity_manager.get_component(entity_id, CollisionComponent)
-            assert isinstance(transform, TransformComponent)
-            assert isinstance(velocity, VelocityComponent)
-            assert isinstance(collision, CollisionComponent)
 
             old_x = transform.x - velocity.vel_x
             old_y = transform.y - velocity.vel_y
