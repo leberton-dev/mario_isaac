@@ -1,4 +1,4 @@
-from .base import Component
+from mario_isaac.ecs.component.base import Component
 
 
 class HealthComponent(Component):
