@@ -2,7 +2,7 @@ from typing import override
 
 import pygame
 
-from ..core import AssetManager, Config, EventBus
+from ..core import TILE_SIZE, AssetManager, Config, EventBus
 from ..ecs import (
     AIMovementSystem,
     CollisionComponent,
@@ -27,11 +27,11 @@ class PlayScene(Scene):
         self._asset_manager: AssetManager = asset_manager
         self._entity_manager: EntityManager = entity_manager
         self._player: int = self._entity_manager.create_entity()
-        self._entity_manager.add_component(self._player, TransformComponent(32, 32, 150, 150))
+        self._entity_manager.add_component(self._player, TransformComponent(TILE_SIZE, TILE_SIZE, 150, 150))
         self._entity_manager.add_component(self._player, VelocityComponent(0, 0, 5))
         self._entity_manager.add_component(self._player, SpriteComponent(self._asset_manager.player_frames))
         self._entity_manager.add_component(self._player, PlayerControlledComponent())
-        self._entity_manager.add_component(self._player, CollisionComponent(32, 32))
+        self._entity_manager.add_component(self._player, CollisionComponent(TILE_SIZE, TILE_SIZE))
         self._floor: Floor = Floor(self._asset_manager, self._entity_manager, self._player)
         self._systems: list[System] = [
             InputSystem(self._entity_manager),
