@@ -25,6 +25,8 @@ from ..ecs import (
 from ..room import Floor
 from .scene import Scene
 
+PAUSE_REQUESTED_EVENT_KEY = pygame.event.custom_type()
+
 
 class PlayScene(Scene):
     def __init__(self, surface: pygame.Surface, asset_manager: AssetManager, bus: EventBus, config: Config, entity_manager: EntityManager) -> None:
@@ -53,7 +55,8 @@ class PlayScene(Scene):
 
     @override
     def handle_event(self, event: pygame.event.Event) -> None:
-        pass
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+            self._event_bus.emit(PAUSE_REQUESTED_EVENT_KEY, {})
 
     @override
     def update(self) -> None:
